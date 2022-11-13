@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+      {%with messages = get_flashed_messages()%}
+        {% if messages %}
+            {% for message  in messages  %}
+            <div class='alert alert-success ml-3 mr-3'>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong></strong>{{message}}
+                            
+             </div>
+
+            {% endfor %}
+
+          {% endif %}
+         {%endwith%}
+        {% if update %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-4">
+                    <div class="card">
+                        <h5 class="card-header bg-dark text-white">
+                            Nuevo videojuego
+                        </h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <form  method="POST" action="/updateCom/{{id}}" enctype="multipart/form-data" >
+                                    <div class="form-group row">
+                                      <label class="col-4 col-form-label" for="txtNombre">Nombre:</label> 
+                                      <div class="col-8">
+                                        <div class="input-group">
+                                          <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                              <i class="fa fa-gamepad"></i>
+                                            </div>
+                                          </div> 
+                                          <input id="txtNombre" value="{{nombre}}" name="txtNombre" placeholder="Ingrese el nombre del viedeojuego" type="text" class="form-control" required>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label for="txtPrecio" class="col-4 col-form-label">Precio:</label> 
+                                      <div class="col-8">
+                                        <div class="input-group">
+                                          <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                              <i class="fa fa-money"></i>
+                                            </div>
+                                          </div> 
+                                          <input id="txtPrecio" value="{{precio}}" name="txtPrecio" placeholder="Ingrese el precio" type="number" class="form-control" required>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                      <label for="txtDescripcion" class="col-4 col-form-label">Descripcion:</label> 
+                                      <div class="col-8">
+                                        <textarea id="txtDescripcion" name="txtDescripcion"  cols="40" rows="2" class="form-control" required>{{descripcion}}</textarea>
+                                      </div>
+                                    </div> 
+
+
+                                    <div class="form-group row">                                     
+                                        <div class="col-8">
+                                            <br>
+                                            <div class="card ">
+                                                <h5 class="card-header text-white bg-dark">
+                                                    Imagen
+                                                </h5>
+                                                <div class="card-body">
+                                                    <input type="text" name="img" value="{{imagen}}">        
+
+                                                    <img id="imgu" src="../static/img/{{imagen}}" width="190" height="100px" alt="" >
+                                                </div>
+                                                <div class="card-footer">
+                                                    Card footer
+                                                </div>
+                                            </div>
+
+                                            <input type="file" name="imagen" id="imagen" onchange="mostrar()" accept="image/png" required />
+                                        </div>
+                                      </div> 
+
+
+                                  
+                                    <div class="form-group row">
+                                      <div class="offset-4 col-8">
+                                        <button name="Guardar" type="submit" class="btn btn-primary">Guardar</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                           GamePlanet
+                        </div>
+                    </div>
+				</div>
+                {% else %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <h5 class="card-header bg-dark text-white">
+                                        Nuevo videojuego
+                                    </h5>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <form  method="POST" action="/administrador" enctype="multipart/form-data" >
+                                                <div class="form-group row">
+                                                  <label class="col-4 col-form-label" for="txtNombre">Nombre:</label> 
+                                                  <div class="col-8">
+                                                    <div class="input-group">
+                                                      <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                          <i class="fa fa-gamepad"></i>
+                                                        </div>
+                                                      </div> 
+                                                      <input id="txtNombre" name="txtNombre" placeholder="Ingrese el nombre del viedeojuego" type="text" class="form-control" required>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                  <label for="txtPrecio" class="col-4 col-form-label">Precio:</label> 
+                                                  <div class="col-8">
+                                                    <div class="input-group">
+                                                      <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                          <i class="fa fa-money"></i>
+                                                        </div>
+                                                      </div> 
+                                                      <input id="txtPrecio" name="txtPrecio" placeholder="Ingrese el precio" type="number" class="form-control" required>
+                                                    </div>
+                                                  </div>
+                                                </div>
+            
+                                                <div class="form-group row">
+                                                  <label for="txtDescripcion" class="col-4 col-form-label">Descripcion:</label> 
+                                                  <div class="col-8">
+                                                    <textarea id="txtDescripcion" name="txtDescripcion" cols="40" rows="2" class="form-control" required></textarea>
+                                                  </div>
+                                                </div> 
+            
+            
+                                                <div class="form-group row">                                     
+                                                    <div class="col-8">
+                                                        <input type="file" name="imagen" accept="image/png" required />
+                                                    </div>
+                                                  </div> 
+            
+            
+                                              
+                                                <div class="form-group row">
+                                                  <div class="offset-4 col-8">
+                                                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                                  </div>
+                                                </div>
+                                              </form>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                       GamePlanet
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endif %}
+
+
+                
+				<div class="col-md-8">
+					<div class="card">
+                        <h5 class="card-header  bg-dark text-white">
+                         Videojuego
+                        </h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <table class="table table-bordered table-hover table-lg">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Nombre del videojuego
+                                        </th>
+                                        <th>
+                                          Caratula
+                                        </th>
+                                        <th>
+                                            Descripcion
+                                        </th>
+                                        <th>
+                                            precio
+                                        </th>
+
+                                        <th>
+                                            estatus
+                                        </th>
+
+                                        <th>
+                                            acciones
+                                        </th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tbody>
+                                    {%for juego in juegos %}
+                                    <tr>
+                                        <td>
+                                            {{juego.id}}
+                                        </td>
+                                        <td>
+                                            {{juego.name}}
+                                            
+                                        </td>
+                                        <td>
+                                            <img src="../static/img/{{juego.img}}" width="50px" height="50px" alt="" >
+                                            
+                                        </td>
+                                       
+                                        <td>
+                                            {{juego.description}}
+                                        </td>
+                                        <td>
+                                            {{juego.precio}}
+                                        </td>
+
+                                        <td>
+                                            {{juego.active}}
+                                        </td>
+
+                                        <td>
+                                        <div>
+                                            <a href="{{url_for('main.delete',id=juego.id)}}" class="btn btn-danger" role="button"> Eliminar .</a>
+                                        </div>
+
+                                        <br>
+                                            <div >
+                         
+                                                <a href="{{url_for('main.update',id=juego.id)}}" class="btn btn-primary" role="button">Actualizar</a>
+                                        </div>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                   
+                                   
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            GamePLanet
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{%endblock  content%}

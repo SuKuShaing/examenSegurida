@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+  
+    <div class="box">       
+        {%with messages = get_flashed_messages()%}
+        {% if messages %}
+            {% for message  in messages  %}
+            <div class='alert alert-danger ml-3 mr-3'>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong></strong>{{message}} . Ir a <a href="{{ url_for('auth.login') }}">login</a>.
+                            
+             </div>
+
+            {% endfor %}
+
+          {% endif %}
+         {%endwith%}
+       
+    </div>
+	<div class="row">
+
+
+		<div class="col-md-1">
+			
+		</div>
+		<div class="col-md-8">
+			<div class="card">
+				<h5 class="card-header bg-dark text-white">
+					Nuevo Usuario GamePlanet
+				</h5>
+				<div class="card-body">
+                    <form method="POST" action="/security/register">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-large form-control" type="email" name="email" placeholder="Email" autofocus="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-large form-control" type="text" name="name" placeholder="Nombre" autofocus="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-large form-control" type="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <br>
+                        <button class=" btn btn-primary button is-block is-info is-large is-fullwidth">Registrar</button>
+                    </form>
+				</div>
+				<div class="card-footer">
+					GamePLanet
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card">
+				<h5 class="card-header bg-dark text-white ">
+					Bienvenidos
+				</h5>
+				<div class="card-body">
+					<p class="card-text text-center">
+                        <img src="../static/img/logocinepolis.png" width="190" height="60px" alt="" >
+                        <br>
+						Llena el fromulario para ser parte de este gran comunidad 
+					</p>
+				</div>
+				<div class="card-footer">
+					Card footer
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
