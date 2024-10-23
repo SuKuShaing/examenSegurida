@@ -10,12 +10,14 @@ from flask_security import login_required, current_user
 # Importamos el decorador login_required de flask_security
 from flask_security.decorators import roles_required
 from project.models import Role, videojuegos
+from project import create_app
 
 
 from werkzeug.utils import secure_filename
 
 # Importamos el objeto de la BD desde __init__.py
 from . import db
+
 
 main = Blueprint("main", __name__)
 
@@ -36,7 +38,6 @@ def index():
 @login_required
 @roles_required("admin")
 def admin():
-
     juegos = videojuegos.query.all()
     return render_template("videojuegosCRUD.html", juegos=juegos)
 
@@ -130,3 +131,9 @@ def galeria():
     print(current_user.admin)
 
     return render_template("galeria.html", juegos=juegos)
+
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(debug=True)
